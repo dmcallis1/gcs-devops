@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_390824",
   "propertyName": "devopstest.gcs.com",
-  "propertyVersion": 1,
-  "etag": "273e4440ad7177abde12280f45bd60040b792eea",
+  "propertyVersion": 2,
+  "etag": "54d366830e5c366002e519fd48a3148d1f0c5c8f",
   "rules": {
     "name": "default",
     "children": [
@@ -339,6 +339,105 @@
         "criteria": [],
         "criteriaMustSatisfy": "all",
         "comments": "Controls caching, which offloads traffic away from the origin. Most objects types are not cached. However, the child rules override this behavior for certain subsets of requests."
+      },
+      {
+        "name": "IM - Feature launch",
+        "children": [
+          {
+            "name": "Image Manager",
+            "children": [],
+            "behaviors": [
+              {
+                "name": "caching",
+                "options": {
+                  "behavior": "MAX_AGE",
+                  "mustRevalidate": false,
+                  "ttl": "30d"
+                }
+              },
+              {
+                "name": "imageManager",
+                "options": {
+                  "advanced": false,
+                  "apiReferenceTitle": "",
+                  "applyBestFileType": true,
+                  "enabled": true,
+                  "policyTokenDefault": "devopstest_gcs_com",
+                  "resize": false,
+                  "settingsTitle": "",
+                  "superCacheRegion": "US",
+                  "trafficTitle": "",
+                  "cpCodeOriginal": {
+                    "id": 371349,
+                    "description": "A2S fURL",
+                    "products": [
+                      "Site_Accel",
+                      "SPM"
+                    ],
+                    "createdDate": 1431447272000,
+                    "name": "A2S fURL"
+                  },
+                  "cpCodeTransformed": {
+                    "id": 378312,
+                    "description": "a2sfeotestbed.edgesuite.net",
+                    "products": [
+                      "SPM"
+                    ],
+                    "createdDate": 1431614762000,
+                    "name": "a2sfeotestbed.edgesuite.net"
+                  }
+                }
+              }
+            ],
+            "criteria": [
+              {
+                "name": "fileExtension",
+                "options": {
+                  "matchCaseSensitive": false,
+                  "matchOperator": "IS_ONE_OF",
+                  "values": [
+                    "jpg",
+                    "gif",
+                    "jpeg",
+                    "png",
+                    "imviewer"
+                  ]
+                }
+              }
+            ],
+            "criteriaMustSatisfy": "all",
+            "comments": "Enable Scale for Mobile to serve the best available size for the requesting device. (Careful testing is highly recommended.) Enable Use Best File Type to serve the image format that works best for the requesting client. To configure breakpoint widths, derivative image quality, and artistic transformations, save and activate this configuration; then, create policies for this policy set via either Image Manager Policy Manager or the OPEN Image Manager API."
+          }
+        ],
+        "behaviors": [],
+        "criteria": [
+          {
+            "name": "matchVariable",
+            "options": {
+              "variableName": "PMUSER_IM_FEATURE",
+              "matchOperator": "IS_ONE_OF",
+              "variableValues": [
+                "true"
+              ],
+              "matchWildcard": false,
+              "matchCaseSensitive": true
+            }
+          },
+          {
+            "name": "requestHeader",
+            "options": {
+              "headerName": "Enable-Dark-Launch",
+              "matchOperator": "IS_ONE_OF",
+              "values": [
+                "true"
+              ],
+              "matchWildcardName": false,
+              "matchWildcardValue": false,
+              "matchCaseSensitiveValue": true
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "any"
       }
     ],
     "behaviors": [
@@ -385,7 +484,15 @@
     "options": {
       "is_secure": true
     },
-    "variables": [],
+    "variables": [
+      {
+        "name": "PMUSER_IM_FEATURE",
+        "value": "false",
+        "description": "IM is enabled only when this variable is set to true",
+        "hidden": false,
+        "sensitive": false
+      }
+    ],
     "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
   },
   "warnings": [
@@ -398,8 +505,13 @@
       "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.ssl_delegate_warning_rotate",
       "errorLocation": "#/rules/behaviors/0",
       "detail": "When rotating your origin's certificate, change your setting in the `Origin Server` behavior from <strong>Use Platform Settings</strong> to <strong>Choose Your Own</strong> and ensure both your old and new certificates are trusted. Your new certificate must be trusted <strong>before</strong> you start using it. You must continue to trust your old certificate until you have started using the new certificate. Failure to follow <a href=\"/dl/rd/propmgr/PropMgr_CSH.htm#1090\" target=\"_blank\">this procedure</a> may result in a service outage or a security breach. It is recommended that you contact your account team with any questions or concerns <strong>before</strong> activating your property."
+    },
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.changing_cpcode_warning",
+      "errorLocation": "#/rules/children/2/children/0/behaviors/1",
+      "detail": "The CP codes in `Image Manager` affect cache IDs for cached images. If you change these CP codes after using this configuration in your production environment, IM will refresh the caches, which could negatively impact performance and load at your origin."
     }
   ],
   "ruleFormat": "v2016-11-15",
-  "comments": "creating initial version"
+  "comments": "added a feature flag example to the config"
 }
