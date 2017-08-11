@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_390824",
   "propertyName": "devopstest.gcs.com",
-  "propertyVersion": 2,
-  "etag": "54d366830e5c366002e519fd48a3148d1f0c5c8f",
+  "propertyVersion": 3,
+  "etag": "bc2a525cb967f31542eeba55afea87abca823174",
   "rules": {
     "name": "default",
     "children": [
@@ -491,6 +491,13 @@
         "description": "IM is enabled only when this variable is set to true",
         "hidden": false,
         "sensitive": false
+      },
+      {
+        "name": "PMUSER_TEST",
+        "value": "true",
+        "description": "Temp just for testing",
+        "hidden": false,
+        "sensitive": false
       }
     ],
     "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
@@ -512,6 +519,5 @@
       "detail": "The CP codes in `Image Manager` affect cache IDs for cached images. If you change these CP codes after using this configuration in your production environment, IM will refresh the caches, which could negatively impact performance and load at your origin."
     }
   ],
-  "ruleFormat": "v2016-11-15",
-  "comments": "added a feature flag example to the config"
+  "ruleFormat": "v2016-11-15"
 }
