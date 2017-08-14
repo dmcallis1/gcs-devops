@@ -5,11 +5,7 @@
   "propertyId": "prp_390824",
   "propertyName": "devopstest.gcs.com",
   "propertyVersion": 4,
-<<<<<<< HEAD
-  "etag": "00198b0341a673347cd8c2fe447bdac65ee89a55",
-=======
   "etag": "09f00dc325793c72d6eb0f1804c7861da703d5a4",
->>>>>>> 17bc632df39c8a8aca714b76e25b4aa59ca47421
   "rules": {
     "name": "default",
     "children": [
@@ -555,10 +551,6 @@
       "detail": "The CP codes in `Image Manager` affect cache IDs for cached images. If you change these CP codes after using this configuration in your production environment, IM will refresh the caches, which could negatively impact performance and load at your origin."
     }
   ],
-<<<<<<< HEAD
-  "ruleFormat": "v2016-11-15"
-=======
   "ruleFormat": "v2016-11-15",
   "comments": "CI_READY"
->>>>>>> 17bc632df39c8a8aca714b76e25b4aa59ca47421
 }
