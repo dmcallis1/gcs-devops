@@ -4,14 +4,49 @@
   "groupId": "grp_63802",
   "propertyId": "prp_390824",
   "propertyName": "devopstest.gcs.com",
-  "propertyVersion": 4,
-  "etag": "09f00dc325793c72d6eb0f1804c7861da703d5a4",
+  "propertyVersion": 5,
+  "etag": "73fbf659f7cb95ceb8c312fdabfc44526a14fc58",
   "rules": {
     "name": "default",
     "children": [
       {
         "name": "Performance",
         "children": [
+          {
+            "name": "Enable HTTP2",
+            "children": [],
+            "behaviors": [
+              {
+                "name": "http2",
+                "options": {
+                  "enabled": ""
+                }
+              },
+              {
+                "name": "allowTransferEncoding",
+                "options": {
+                  "enabled": true
+                }
+              }
+            ],
+            "criteria": [
+              {
+                "name": "hostname",
+                "options": {
+                  "matchOperator": "IS_ONE_OF",
+                  "values": []
+                }
+              },
+              {
+                "name": "bucket",
+                "options": {
+                  "percentage": 100
+                }
+              }
+            ],
+            "criteriaMustSatisfy": "all",
+            "comments": ""
+          },
           {
             "name": "JPEG Images",
             "children": [],
@@ -529,6 +564,18 @@
     ],
     "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
   },
+  "errors": [
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/option_empty",
+      "errorLocation": "#/rules/children/0/children/0/criteria/0/options/values",
+      "detail": "The Hostnames option in `Hostname` must not be empty."
+    },
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/compatible_behaviors",
+      "errorLocation": "#/rules/children/0/children/0/criteria/1",
+      "detail": "`Percentage of Clients` is not compatible with behavior `Chunked Transfer Encoding`"
+    }
+  ],
   "warnings": [
     {
       "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.ssl_delegate_warning_intro",
