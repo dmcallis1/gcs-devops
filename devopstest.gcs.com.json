@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_390824",
   "propertyName": "devopstest.gcs.com",
-  "propertyVersion": 5,
-  "etag": "73fbf659f7cb95ceb8c312fdabfc44526a14fc58",
+  "propertyVersion": 6,
+  "etag": "ea54cb0230e33a05037cd0f2fb1d481664300e85",
   "rules": {
     "name": "default",
     "children": [
@@ -34,7 +34,9 @@
                 "name": "hostname",
                 "options": {
                   "matchOperator": "IS_ONE_OF",
-                  "values": []
+                  "values": [
+                    "devopstest.gcs.akamai.com"
+                  ]
                 }
               },
               {
@@ -565,11 +567,6 @@
     "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
   },
   "errors": [
-    {
-      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/option_empty",
-      "errorLocation": "#/rules/children/0/children/0/criteria/0/options/values",
-      "detail": "The Hostnames option in `Hostname` must not be empty."
-    },
     {
       "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/compatible_behaviors",
       "errorLocation": "#/rules/children/0/children/0/criteria/1",
