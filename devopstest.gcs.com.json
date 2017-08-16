@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_390824",
   "propertyName": "devopstest.gcs.com",
-  "propertyVersion": 6,
-  "etag": "ea54cb0230e33a05037cd0f2fb1d481664300e85",
+  "propertyVersion": 7,
+  "etag": "864b128a85bc871157ab2a64b4ab6ccaf3f2493e",
   "rules": {
     "name": "default",
     "children": [
