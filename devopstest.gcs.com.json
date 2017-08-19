@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_390824",
   "propertyName": "devopstest.gcs.com",
-  "propertyVersion": 10,
-  "etag": "ae90ffd5ecec2ce9e2355eb708cad11406d0c391",
+  "propertyVersion": 12,
+  "etag": "f6942d042ddc4bc25c70dd607cd3e2bdb3969692",
   "rules": {
     "name": "default",
     "children": [
@@ -29,23 +29,7 @@
                 }
               }
             ],
-            "criteria": [
-              {
-                "name": "hostname",
-                "options": {
-                  "matchOperator": "IS_ONE_OF",
-                  "values": [
-                    "devopstest.gcs.akamai.com"
-                  ]
-                }
-              },
-              {
-                "name": "bucket",
-                "options": {
-                  "percentage": 100
-                }
-              }
-            ],
+            "criteria": [],
             "criteriaMustSatisfy": "all",
             "comments": ""
           },
@@ -566,13 +550,6 @@
     ],
     "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
   },
-  "errors": [
-    {
-      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/compatible_behaviors",
-      "errorLocation": "#/rules/children/0/children/0/criteria/1",
-      "detail": "`Percentage of Clients` is not compatible with behavior `Chunked Transfer Encoding`"
-    }
-  ],
   "warnings": [
     {
       "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.ssl_delegate_warning_intro",
