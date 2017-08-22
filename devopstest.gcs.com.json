@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_399297",
   "propertyName": "devopstest-gold.gcs.com",
-  "propertyVersion": 2,
-  "etag": "932cd519c0b6d3045ab18f07c9697d12cc7d4b3b",
+  "propertyVersion": 4,
+  "etag": "ed9e8c45d7752a01604f13192dc66079142cdf8d",
   "rules": {
     "name": "default",
     "children": [
@@ -417,5 +417,5 @@
     }
   ],
   "ruleFormat": "latest",
-  "comments": "CI_READY??!!"
+  "comments": "CI_READY"
 }
