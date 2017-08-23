@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_399297",
   "propertyName": "devopstest-gold.gcs.com",
-  "propertyVersion": 2,
-  "etag": "932cd519c0b6d3045ab18f07c9697d12cc7d4b3b",
+  "propertyVersion": 6,
+  "etag": "62215f1ceef7eb8181bed9f7964f152c9e8b429b",
   "rules": {
     "name": "default",
     "children": [
@@ -108,12 +108,6 @@
             "name": "enhancedAkamaiProtocol",
             "options": {
               "display": ""
-            }
-          },
-          {
-            "name": "http2",
-            "options": {
-              "enabled": ""
             }
           },
           {
@@ -417,5 +411,5 @@
     }
   ],
   "ruleFormat": "latest",
-  "comments": "CI_READY??!!"
+  "comments": "CI_READY"
 }
