@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_399297",
   "propertyName": "devopstest-gold.gcs.com",
-  "propertyVersion": 2,
-  "etag": "932cd519c0b6d3045ab18f07c9697d12cc7d4b3b",
+  "propertyVersion": 7,
+  "etag": "04d43344b9eb964dd1f72fb4c2fa050828372715",
   "rules": {
     "name": "default",
     "children": [
@@ -108,12 +108,6 @@
             "name": "enhancedAkamaiProtocol",
             "options": {
               "display": ""
-            }
-          },
-          {
-            "name": "http2",
-            "options": {
-              "enabled": ""
             }
           },
           {
@@ -350,8 +344,7 @@
           {
             "name": "tieredDistribution",
             "options": {
-              "enabled": true,
-              "tieredDistributionMap": "CH2"
+              "enabled": true
             }
           }
         ],
@@ -367,10 +360,15 @@
           "cacheKeyHostname": "ORIGIN_HOSTNAME",
           "compress": true,
           "enableTrueClientIp": false,
-          "forwardHostHeader": "REQUEST_HOST_HEADER",
+          "forwardHostHeader": "ORIGIN_HOSTNAME",
           "httpPort": 80,
           "originType": "CUSTOMER",
-          "hostname": "origin-www.colinbendell.com"
+          "hostname": "origin.akshayranganath.com",
+          "originCertificate": "",
+          "verificationMode": "PLATFORM_SETTINGS",
+          "ports": "",
+          "httpsPort": 443,
+          "originSni": false
         }
       },
       {
@@ -399,15 +397,37 @@
         "options": {
           "enabled": true
         }
+      },
+      {
+        "name": "prefreshCache",
+        "options": {
+          "enabled": true,
+          "prefreshval": 90
+        }
       }
     ],
     "options": {
-      "is_secure": false
+      "is_secure": true
     },
     "variables": [],
     "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
   },
   "warnings": [
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.ssl_delegate_warning_intro",
+      "errorLocation": "#/rules/behaviors/0",
+      "detail": "Akamai enhanced the `Origin Server` behavior. Before configuring any settings, click the <strong>Verification Settings</strong> drop-down menu and read the context-sensitive information that appears."
+    },
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.ssl_delegate_warning_rotate",
+      "errorLocation": "#/rules/behaviors/0",
+      "detail": "When rotating your origin's certificate, change your setting in the `Origin Server` behavior from <strong>Use Platform Settings</strong> to <strong>Choose Your Own</strong> and ensure both your old and new certificates are trusted. Your new certificate must be trusted <strong>before</strong> you start using it. You must continue to trust your old certificate until you have started using the new certificate. Failure to follow <a href=\"/dl/rd/propmgr/PropMgr_CSH.htm#1090\" target=\"_blank\">this procedure</a> may result in a service outage or a security breach. It is recommended that you contact your account team with any questions or concerns <strong>before</strong> activating your property."
+    },
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/need_feature",
+      "errorLocation": "#/rules/behaviors/4",
+      "detail": "`Cache Prefreshing` only applies to cacheable content, but caching was never turned on."
+    },
     {
       "title": "Unstable rule format",
       "type": "https://problems.luna.akamaiapis.net/papi/v0/unstable_rule_format",
@@ -417,5 +437,5 @@
     }
   ],
   "ruleFormat": "latest",
-  "comments": "CI_READY??!!"
+  "comments": "CI_READ"
 }
