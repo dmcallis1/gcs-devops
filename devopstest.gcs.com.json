@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_399297",
   "propertyName": "devopstest-gold.gcs.com",
-  "propertyVersion": 7,
-  "etag": "04d43344b9eb964dd1f72fb4c2fa050828372715",
+  "propertyVersion": 13,
+  "etag": "6aee92cb49d1310d0d79bb774322efb214f6ff9b",
   "rules": {
     "name": "default",
     "children": [
@@ -404,6 +404,12 @@
           "enabled": true,
           "prefreshval": 90
         }
+      },
+      {
+        "name": "allowPatch",
+        "options": {
+          "enabled": true
+        }
       }
     ],
     "options": {
@@ -437,5 +443,5 @@
     }
   ],
   "ruleFormat": "latest",
-  "comments": "CI_READ"
+  "comments": ""
 }
