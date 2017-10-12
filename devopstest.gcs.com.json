@@ -4,8 +4,8 @@
   "groupId": "grp_63802",
   "propertyId": "prp_399297",
   "propertyName": "devopstest-gold.gcs.com",
-  "propertyVersion": 7,
-  "etag": "04d43344b9eb964dd1f72fb4c2fa050828372715",
+  "propertyVersion": 21,
+  "etag": "61d0be1ce8a88478b3be8071922e82ab0bd64150",
   "rules": {
     "name": "default",
     "children": [
@@ -351,6 +351,54 @@
         "criteria": [],
         "criteriaMustSatisfy": "all",
         "comments": "Controls caching, which offloads traffic away from the origin. Most objects types are not cached. However, the child rules override this behavior for certain subsets of requests."
+      },
+      {
+        "name": "Homepage Caching",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "caching",
+            "options": {
+              "behavior": "MAX_AGE",
+              "mustRevalidate": false,
+              "ttl": "0s"
+            }
+          },
+          {
+            "name": "prefreshCache",
+            "options": {
+              "enabled": true,
+              "prefreshval": 90
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "path",
+            "options": {
+              "matchOperator": "MATCHES_ONE_OF",
+              "values": [
+                "/"
+              ],
+              "matchCaseSensitive": false
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all"
+      },
+      {
+        "name": "Real User Monitoring",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "realUserMonitoring",
+            "options": {
+              "enabled": true
+            }
+          }
+        ],
+        "criteria": [],
+        "criteriaMustSatisfy": "all"
       }
     ],
     "behaviors": [
@@ -399,10 +447,9 @@
         }
       },
       {
-        "name": "prefreshCache",
+        "name": "removeVary",
         "options": {
-          "enabled": true,
-          "prefreshval": 90
+          "enabled": false
         }
       }
     ],
@@ -424,11 +471,6 @@
       "detail": "When rotating your origin's certificate, change your setting in the `Origin Server` behavior from <strong>Use Platform Settings</strong> to <strong>Choose Your Own</strong> and ensure both your old and new certificates are trusted. Your new certificate must be trusted <strong>before</strong> you start using it. You must continue to trust your old certificate until you have started using the new certificate. Failure to follow <a href=\"/dl/rd/propmgr/PropMgr_CSH.htm#1090\" target=\"_blank\">this procedure</a> may result in a service outage or a security breach. It is recommended that you contact your account team with any questions or concerns <strong>before</strong> activating your property."
     },
     {
-      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/need_feature",
-      "errorLocation": "#/rules/behaviors/4",
-      "detail": "`Cache Prefreshing` only applies to cacheable content, but caching was never turned on."
-    },
-    {
       "title": "Unstable rule format",
       "type": "https://problems.luna.akamaiapis.net/papi/v0/unstable_rule_format",
       "detail": "This property is using `latest` rule format, which is designed to reflect interface changes immediately. We suggest converting the property to a stable rule format such as `v2017-06-19` to minimize the risk of interface changes breaking your API client program.",
@@ -437,5 +479,5 @@
     }
   ],
   "ruleFormat": "latest",
-  "comments": "CI_READ"
+  "comments": ""
 }
