@@ -2,10 +2,10 @@
   "accountId": "act_B-C-1ED34DK",
   "contractId": "ctr_C-1ED34DY",
   "groupId": "grp_63802",
-  "propertyId": "prp_399297",
-  "propertyName": "devopstest-gold.gcs.com",
-  "propertyVersion": 7,
-  "etag": "04d43344b9eb964dd1f72fb4c2fa050828372715",
+  "propertyId": "prp_423579",
+  "propertyName": "devopstest-eph.gcs.com",
+  "propertyVersion": 21,
+  "etag": "5410a6730d810430e33ccf5e155265e2ca210d42",
   "rules": {
     "name": "default",
     "children": [
@@ -157,7 +157,7 @@
                 "options": {
                   "behavior": "MAX_AGE",
                   "mustRevalidate": false,
-                  "ttl": "1d"
+                  "ttl": "7d"
                 }
               },
               {
@@ -178,12 +178,12 @@
               {
                 "name": "fileExtension",
                 "options": {
-                  "matchCaseSensitive": false,
                   "matchOperator": "IS_ONE_OF",
                   "values": [
                     "css",
                     "js"
-                  ]
+                  ],
+                  "matchCaseSensitive": false
                 }
               }
             ],
@@ -285,7 +285,8 @@
                     "webp",
                     "jxr",
                     "jar",
-                    "jp2"
+                    "jp2",
+                    "abc"
                   ]
                 }
               }
@@ -351,6 +352,194 @@
         "criteria": [],
         "criteriaMustSatisfy": "all",
         "comments": "Controls caching, which offloads traffic away from the origin. Most objects types are not cached. However, the child rules override this behavior for certain subsets of requests."
+      },
+      {
+        "name": "Homepage Caching",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "caching",
+            "options": {
+              "behavior": "MAX_AGE",
+              "mustRevalidate": false,
+              "ttl": "0s"
+            }
+          },
+          {
+            "name": "prefreshCache",
+            "options": {
+              "enabled": true,
+              "prefreshval": 90
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "path",
+            "options": {
+              "matchOperator": "MATCHES_ONE_OF",
+              "values": [
+                "/"
+              ],
+              "matchCaseSensitive": false
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all"
+      },
+      {
+        "name": "Mobile Redirect",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "modifyOutgoingRequestHeader",
+            "options": {
+              "action": "ADD",
+              "standardAddHeaderName": "OTHER",
+              "headerValue": "true",
+              "customHeaderName": "mobile"
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "deviceCharacteristic",
+            "options": {
+              "characteristic": "IS_WIRELESS_DEVICE",
+              "booleanValue": true
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all"
+      },
+      {
+        "name": "Real User Monitoring",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "realUserMonitoring",
+            "options": {
+              "enabled": false
+            }
+          }
+        ],
+        "criteria": [],
+        "criteriaMustSatisfy": "all"
+      },
+      {
+        "name": "X-Frame-Options",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "modifyOutgoingResponseHeader",
+            "options": {
+              "action": "MODIFY",
+              "standardModifyHeaderName": "OTHER",
+              "newHeaderValue": "ALLOW-FROM https://pwc.com/",
+              "avoidDuplicateHeaders": true,
+              "customHeaderName": "X-Frame-Options"
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "filename",
+            "options": {
+              "matchOperator": "IS_ONE_OF",
+              "values": [
+                "crossdomain.xml"
+              ],
+              "matchCaseSensitive": true
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all"
+      },
+      {
+        "name": "Deny Specific Referrer",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "denyAccess",
+            "options": {
+              "reason": "undesired-referer",
+              "enabled": true
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "requestHeader",
+            "options": {
+              "headerName": "Referer",
+              "matchWildcardName": false,
+              "matchOperator": "IS_ONE_OF",
+              "values": [
+                "http://www.myspace.com"
+              ],
+              "matchCaseSensitiveValue": false,
+              "matchWildcardValue": true
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all"
+      },
+      {
+        "name": "Deny Specific Referrer",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "denyAccess",
+            "options": {
+              "reason": "undesired-referer",
+              "enabled": true
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "requestHeader",
+            "options": {
+              "headerName": "Referer",
+              "matchWildcardName": false,
+              "matchOperator": "IS_ONE_OF",
+              "values": [
+                "http://ww.fastly.com"
+              ],
+              "matchCaseSensitiveValue": false,
+              "matchWildcardValue": true
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all"
+      },
+      {
+        "name": "Deny by Location",
+        "children": [],
+        "behaviors": [
+          {
+            "name": "denyAccess",
+            "options": {
+              "reason": "deny-by-continent",
+              "enabled": true
+            }
+          }
+        ],
+        "criteria": [
+          {
+            "name": "userLocation",
+            "options": {
+              "field": "CONTINENT",
+              "checkIps": "CONNECTING",
+              "continentValues": [
+                "NA"
+              ],
+              "matchOperator": "IS_ONE_OF"
+            }
+          }
+        ],
+        "criteriaMustSatisfy": "all",
+        "comments": "List the locations that need to be denied"
       }
     ],
     "behaviors": [
@@ -363,26 +552,12 @@
           "forwardHostHeader": "ORIGIN_HOSTNAME",
           "httpPort": 80,
           "originType": "CUSTOMER",
-          "hostname": "origin.akshayranganath.com",
+          "hostname": "%{{user.PMUSER_ORIGIN}}",
           "originCertificate": "",
           "verificationMode": "PLATFORM_SETTINGS",
           "ports": "",
           "httpsPort": 443,
           "originSni": false
-        }
-      },
-      {
-        "name": "cpCode",
-        "options": {
-          "value": {
-            "id": 600588,
-            "description": "devopstest.gcs.akamai.com",
-            "products": [
-              "SPM"
-            ],
-            "createdDate": 1500577082000,
-            "name": "devopstest.gcs.akamai.com"
-          }
         }
       },
       {
@@ -399,20 +574,87 @@
         }
       },
       {
+        "name": "prefetch",
+        "options": {
+          "enabled": true
+        }
+      },
+      {
+        "name": "removeVary",
+        "options": {
+          "enabled": true
+        }
+      },
+      {
+        "name": "cpCode",
+        "options": {
+          "value": {
+            "id": 612238
+          }
+        }
+      },
+      {
+        "name": "modifyOutgoingResponseHeader",
+        "options": {
+          "action": "ADD",
+          "standardAddHeaderName": "OTHER",
+          "headerValue": "Bar",
+          "customHeaderName": "Foo"
+        }
+      },
+      {
         "name": "prefreshCache",
         "options": {
           "enabled": true,
           "prefreshval": 90
+        }
+      },
+      {
+        "name": "modifyOutgoingRequestHeader",
+        "options": {
+          "action": "MODIFY",
+          "standardModifyHeaderName": "OTHER",
+          "newHeaderValue": "{{builtin.AK_TLS_VERSION}}|{{builtin.AK_TLS_CIPHER_NAME}}",
+          "avoidDuplicateHeaders": false,
+          "customHeaderName": "X-Edge-TLS-Info"
+        }
+      },
+      {
+        "name": "modifyOutgoingResponseHeader",
+        "options": {
+          "action": "ADD",
+          "standardAddHeaderName": "PRAGMA",
+          "headerValue": "dom was here"
         }
       }
     ],
     "options": {
       "is_secure": true
     },
-    "variables": [],
+    "variables": [
+      {
+        "name": "PMUSER_FOOCPCODE",
+        "value": "12345",
+        "description": "CP Code",
+        "hidden": false,
+        "sensitive": false
+      },
+      {
+        "name": "PMUSER_ORIGIN",
+        "value": "origin.akshayranganath.com",
+        "description": "Origin",
+        "hidden": false,
+        "sensitive": false
+      }
+    ],
     "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
   },
   "warnings": [
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/cannot_validate",
+      "errorLocation": "#/rules/behaviors/0/options/hostname",
+      "detail": "The input to option Origin Server Hostname of `Origin Server` cannot be validated because of variable expression usage. Because of the use of variables, the value of the option is only known at runtime."
+    },
     {
       "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.ssl_delegate_warning_intro",
       "errorLocation": "#/rules/behaviors/0",
@@ -425,17 +667,20 @@
     },
     {
       "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/need_feature",
-      "errorLocation": "#/rules/behaviors/4",
+      "errorLocation": "#/rules/behaviors/7",
       "detail": "`Cache Prefreshing` only applies to cacheable content, but caching was never turned on."
     },
     {
-      "title": "Unstable rule format",
-      "type": "https://problems.luna.akamaiapis.net/papi/v0/unstable_rule_format",
-      "detail": "This property is using `latest` rule format, which is designed to reflect interface changes immediately. We suggest converting the property to a stable rule format such as `v2017-06-19` to minimize the risk of interface changes breaking your API client program.",
-      "currentRuleFormat": "latest",
-      "suggestedRuleFormat": "v2017-06-19"
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/need_feature",
+      "errorLocation": "#/rules/children/3/criteria/0",
+      "detail": "When you're modifying the content returned to the user based on `Device Characteristics`, you should use the Modify Outgoing Response Header behavior to add a Vary: User-Agent header to the response."
+    },
+    {
+      "type": "https://problems.luna.akamaiapis.net/papi/v0/validation/validation_message.onlyonedge",
+      "errorLocation": "#/rules/children/8/criteria/0",
+      "detail": "The behaviors and matches enclosed within a `User Location Data` match will only be executed by the Akamai edge server that receives the client request. If the request is forwarded to another Akamai server, the matches and behaviors enclosed will be ignored. If you are unsure about how this will affect your property please contact your Akamai Technical representative."
     }
   ],
-  "ruleFormat": "latest",
-  "comments": "CI_READ"
+  "ruleFormat": "v2017-06-19",
+  "comments": ""
 }
